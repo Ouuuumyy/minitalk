@@ -64,11 +64,11 @@ int main(int ac, char **av)
     i = 0;
     if(ac != 3)
     {
-        printf("enter program name, server id, message\n");
+        printf("Enter: <program name> <server pid> <message>\n");
         return (1);
     }
     pid_t server_pid = ft_atoi(av[1]);
-    if(server_pid <= 0)
+    if(server_pid < 0 && server_pid > 99999)
     {
         ft_putstr("Error: inavalid server PID.\n");
         exit (1);
