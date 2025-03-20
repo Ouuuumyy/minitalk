@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 03:04:00 by oukadir           #+#    #+#             */
-/*   Updated: 2025/03/17 03:33:44 by oukadir          ###   ########.fr       */
+/*   Updated: 2025/03/20 00:05:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	send_new_line(int bit, pid_t server_pid)
 	{
 		bit = (c >> j) & 1;
 		send_signal(bit, server_pid);
-		usleep(500);
+		usleep(1000);
 		j--;
 	}
 }
@@ -86,7 +86,7 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	server_pid = ft_atoi(av[1]);
-	if (server_pid < 0 && server_pid > 99999)
+	if (server_pid < 0)
 	{
 		ft_putstr("Error: inavalid server PID.\n");
 		exit(1);

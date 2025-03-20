@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 03:04:35 by oukadir           #+#    #+#             */
-/*   Updated: 2025/03/17 03:35:51 by oukadir          ###   ########.fr       */
+/*   Updated: 2025/03/18 04:20:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,18 @@
 
 volatile sig_atomic_t	g_byte = 0;
 
-void	handle_sigusr(int sig)
+void	handle_sigusr(int sig, siginfo_t *info, void *context)
 {
 	static int	bit_count;
+	static int client_pid = 0;
 	char		c;
 
+	(void)context;
+	if(client_pid != info->si_pid)
+	{
+		bit_count = 0;
+		g_byte = 0;
+	}
 	if (sig == SIGUSR1)
 	{
 		g_byte = (g_byte << 1) | 0;
@@ -33,17 +40,22 @@ void	handle_sigusr(int sig)
 	{
 		c = (char)g_byte;
 		write(1, &c, 1);
+		c = 0;
 		g_byte = 0;
 		bit_count = 0;
 	}
+	client_pid = info->si_pid;
 }
 
 int	main(void)
 {
 	int	pid;
+	struct sigaction sa;
 
-	signal(SIGUSR1, handle_sigusr);
-	signal(SIGUSR2, handle_sigusr);
+	sa.sa_sigaction = handle_sigusr;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	pid = (int)getpid();
 	ft_putstr("Server pid ");
 	ft_putnbr(pid);
