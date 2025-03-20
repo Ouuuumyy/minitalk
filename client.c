@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 03:04:00 by oukadir           #+#    #+#             */
-/*   Updated: 2025/03/20 00:05:57 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/20 02:00:40 by oukadir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	main(int ac, char **av)
 	i = 0;
 	if (ac != 3)
 	{
-		printf("Enter: <program name> <server pid> <message>\n");
+		ft_putstr("Enter: <program name> <server pid> <message>\n");
 		return (1);
 	}
 	server_pid = ft_atoi(av[1]);
